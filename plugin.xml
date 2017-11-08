@@ -1,0 +1,38 @@
+<?xml version='1.0' encoding='utf-8'?>
+<?xml version="1.0" encoding="utf-8"?>
+
+<plugin xmlns="http://apache.org/cordova/ns/plugins/1.0" xmlns:android="http://schemas.android.com/apk/res/android" id="cordova-plugin-xprinter" version="0.1">
+    <name>CordovaXprinter</name>
+    <js-module name="CordovaXprinter" src="www/CordovaXprinter.js">
+        <clobbers target="CordovaXprinter"/>
+    </js-module>
+    <platform name="ios">
+        <config-file parent="/*" target="config.xml">
+            <feature name="CordovaXprinter">
+                <param name="ios-package" value="CordovaXprinter"/>
+            </feature>
+        </config-file>
+        <header-file src="src/ios/HLBluetooth/HLBLEConst.h" />
+        <header-file src="src/ios/HLBluetooth/HLBLEMananger.h" />
+        <source-file src="src/ios/HLBluetooth/HLBLEMananger.m" />
+        <header-file src="src/ios/HLPrinter/HLPrinter.h" />
+        <source-file src="src/ios/HLPrinter/HLPrinter.m" />
+        <header-file src="src/ios/HLPrinter/UIImage+Bitmap.h" />
+        <source-file src="src/ios/HLPrinter/UIImage+Bitmap.m" />
+        <header-file src="src/ios/HLPrinter/UIWebView+UIImage.h" />
+        <source-file src="src/ios/HLPrinter/UIWebView+UIImage..m" />
+        <source-file src="src/ios/CordovaXprinter.m"/>
+    </platform>
+    <platform name="android">
+        <config-file parent="/*" target="res/xml/config.xml">
+            <feature name="CordovaXprinter">
+                <param name="android-package" value="com.hengan.Xprinter.CordovaXprinter"/>
+            </feature>
+        </config-file>
+        <config-file parent="/*" target="AndroidManifest.xml"/>
+        <source-file src="src/android/CordovaXprinter.java" target-dir="src/com/hengan/Xprinter/CordovaXprinter"/>
+        <source-file src="src/android/PrinterAdapter.java" target-dir="src/com/hengan/Xprinter/CordovaXprinter"/>
+        <source-file src="src/android/PicFromPrintUtils.java" target-dir="src/com/hengan/Xprinter/CordovaXprinter"/>
+    </platform>
+</plugin>
+
