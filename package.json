@@ -2,6 +2,10 @@
   "name": "cordova-plugin-Xprinter",
   "description": "A cordova for Xprinter",
   "version": "1.0.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/percyluan/cordova-plugin-xprinter"
+  },
   "keywords": [
     "cordova",
     "plugin",
