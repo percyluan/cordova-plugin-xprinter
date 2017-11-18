@@ -13,8 +13,8 @@
             </feature>
         </config-file>
         <header-file src="src/ios/HLBluetooth/HLBLEConst.h" />
-        <header-file src="src/ios/HLBluetooth/HLBLEMananger.h" />
-        <source-file src="src/ios/HLBluetooth/HLBLEMananger.m" />
+        <header-file src="src/ios/HLBluetooth/HLBLEManager.h" />
+        <source-file src="src/ios/HLBluetooth/HLBLEManager.m" />
         <header-file src="src/ios/HLPrinter/HLPrinter.h" />
         <source-file src="src/ios/HLPrinter/HLPrinter.m" />
         <header-file src="src/ios/HLPrinter/UIImage+Bitmap.h" />
