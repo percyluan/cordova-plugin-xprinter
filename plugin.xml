@@ -20,7 +20,7 @@
         <header-file src="src/ios/HLPrinter/UIImage+Bitmap.h" />
         <source-file src="src/ios/HLPrinter/UIImage+Bitmap.m" />
         <header-file src="src/ios/HLPrinter/UIWebView+UIImage.h" />
-        <source-file src="src/ios/HLPrinter/UIWebView+UIImage..m" />
+        <source-file src="src/ios/HLPrinter/UIWebView+UIImage.m" />
         <source-file src="src/ios/CordovaXprinter.m"/>
     </platform>
     <platform name="android">
