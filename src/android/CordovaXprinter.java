@@ -448,11 +448,14 @@ public class CordovaXprinter extends CordovaPlugin {
     private void printHenganOrder(JSONObject order){
         try {
             printerAdapter.printer("\n\n\n\n");
-            printImg();
-            printerAdapter.printer("\n\n\n\n");
+            selectCommand("BOLD");
+            selectCommand("DOUBLE_HEIGHT_WIDTH");
+            printerAdapter.printer("恒安集团快速配送服务");
+            selectCommand("RESET");
+            selectCommand("RESET");
+            printerAdapter.printer("\n\n");
             selectCommand("LINE_SPACING_DEFAULT");
-            selectCommand("ALIGN_CENTER");
-            printerAdapter.printer("订单详情\n\n");
+            printerAdapter.printer("            订单详情\n\n");
             selectCommand("RESET");
             selectCommand("LINE_SPACING_DEFAULT");
             SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm");
@@ -461,7 +464,7 @@ public class CordovaXprinter extends CordovaPlugin {
             printerAdapter.printer("********************************\n");
 
             printerAdapter.printer("订单号：      "+order.getString("orderNo")+"\n");
-            printerAdapter.printer("下单方式：    "+order.getString("source")+"\n");
+            printerAdapter.printer("下单方式：    "+"恒安集团微商城\n"/*order.getString("source")+"\n"*/);
             printerAdapter.printer("********************************\n");
             printerAdapter.printer("收件人：      "+order.getString("receiverName")+"\n");
             printerAdapter.printer("联系方式：    "+order.getString("mobile")+"\n");
@@ -474,7 +477,8 @@ public class CordovaXprinter extends CordovaPlugin {
                 selectCommand("BOLD");
                 printerAdapter.printer(good.getString("skuName")+"\n");
                 selectCommand("BOLD_CANCEL");
-                printerAdapter.printer(printTwoData("规格："+good.getString("specification"),"件数："+good.getString("goodsNumber")));
+                printerAdapter.printer(printTwoData("规格：",good.getString("specification")));
+                printerAdapter.printer(printTwoData("件数：",good.getString("goodsNumber")));
             }
 
             printerAdapter.printer("********************************\n");
