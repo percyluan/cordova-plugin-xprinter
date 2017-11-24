@@ -113,7 +113,7 @@ public class CordovaXprinter extends CordovaPlugin {
 
             callbackContext.success(jsonStrs);
         }catch (Exception e){
-            callbackContext.error("扫描设备失败.");
+            callbackContext.error(e.toString());
         }
     }
 
