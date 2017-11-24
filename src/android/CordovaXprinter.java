@@ -112,7 +112,10 @@ public class CordovaXprinter extends CordovaPlugin {
             }
 
             callbackContext.success(jsonStrs);
-        }catch (Exception e){
+        }catch (SecurityException e){
+            callbackContext.error("无法打开蓝牙：程序无权限，请手动开启权限！");
+        }
+        catch (Exception e){
             callbackContext.error(e.toString());
         }
     }
@@ -126,14 +129,15 @@ public class CordovaXprinter extends CordovaPlugin {
     private void connectDevice(String name, CallbackContext callbackContext) {
         if (name != null && name != "") {
             try{
-                printerAdapter.connect(name);
-                callbackContext.success("连接设备成功:"+name);
+                String result = printerAdapter.connect(name);
+                if(result.contains("success")){
+                    callbackContext.success("连接设备成功:"+result);
+                }else{
+                    callbackContext.error("连接失败:"+result);
+                }
             }catch (Exception e){
-                callbackContext.error("连接设备失败:"+name);
+                callbackContext.error(e.toString());
             }
-
-        } else {
-            callbackContext.error("设备名称不能为空");
         }
     }
 
@@ -144,7 +148,12 @@ public class CordovaXprinter extends CordovaPlugin {
      * @param callbackContext
      */
     private void writeDevice(JSONObject order, CallbackContext callbackContext) {
-        printHenganOrder(order);
+        try {
+            printHenganOrder(order);
+        }catch (Exception e){
+            callbackContext.error(e.toString());
+        }
+
         /*if (message != null && message != "") {
             try {
                 printerAdapter.printer(message);
@@ -445,9 +454,8 @@ public class CordovaXprinter extends CordovaPlugin {
 
     }
 
-    private void printHenganOrder(JSONObject order){
-        try {
-            printerAdapter.printer("\n\n\n\n");
+    private void printHenganOrder(JSONObject order) throws Exception{
+            printerAdapter.printer("\n\n");
             selectCommand("BOLD");
             selectCommand("DOUBLE_HEIGHT_WIDTH");
             printerAdapter.printer("恒安集团快速配送服务");
@@ -486,10 +494,5 @@ public class CordovaXprinter extends CordovaPlugin {
             printerAdapter.printer("感谢你对恒安产品的支持！\n");
             selectCommand("RESET");
             printerAdapter.printer("\n\n\n\n\n\n\n\n\n\n");
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
     }
 }

@@ -2,6 +2,7 @@ package com.hengan.Xprinter;
 
 import android.app.Activity;
 import android.bluetooth.BluetoothAdapter;
+import android.bluetooth.BluetoothClass;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothSocket;
 import android.widget.Toast;
@@ -70,6 +71,10 @@ public class PrinterAdapter extends Activity{
             int i = 0;
             for (BluetoothDevice bluetoothDevice : pList) {
                 name[i++] = bluetoothDevice.getName();
+                /*if(1664 == bluetoothDevice.getBluetoothClass().getDeviceClass()){
+
+                }*/
+
             }
         }else{
             Toast.makeText(this, "没找到匹配的蓝牙打印机", Toast.LENGTH_SHORT).show();
@@ -84,35 +89,41 @@ public class PrinterAdapter extends Activity{
      * @return
      */
     private String getAddress(String name){
-        Set<BluetoothDevice> pList=mBluetoothAdapter.getBondedDevices();
+        Set<BluetoothDevice> pList = mBluetoothAdapter.getBondedDevices();
 
         if(pList!=null&&pList.size()>0){
             for (BluetoothDevice bluetoothDevice : pList) {
-                if(bluetoothDevice.getName().equals(name));
-                return bluetoothDevice.getAddress();
+                if(bluetoothDevice.getName().equals(name)){
+                    return bluetoothDevice.getAddress();
+                }
             }
-        }else{
-            Toast.makeText(this, "根据设备名获取地址失败", Toast.LENGTH_SHORT).show();
         }
+
         return null;
     }
 
     /**
      * 连接指定设备
      */
-    public boolean connect(String name){
+    public String connect(String name){
 
-        boolean success = true;
-        mBluetoothDevice=mBluetoothAdapter.getRemoteDevice(this.getAddress(name));
-        try {
-            mBluetoothSocket=mBluetoothDevice.createRfcommSocketToServiceRecord(SPP_UUID);
-            mBluetoothSocket.connect();
-        } catch (IOException e) {
-            success = false;
-            e.printStackTrace();
-        }finally {
-            return success;
+        String success = "success";
+        String address = this.getAddress(name);
+
+        if (address == null) {
+            success = "无法连接，设备不存在";
+        }else{
+            success = success + address;
+            try {
+                mBluetoothDevice=mBluetoothAdapter.getRemoteDevice(address);
+                mBluetoothSocket=mBluetoothDevice.createRfcommSocketToServiceRecord(SPP_UUID);
+                mBluetoothSocket.connect();
+            } catch (Exception e) {
+                success = address;
+            }
         }
+
+        return success;
     }
 
     /**
