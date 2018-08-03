@@ -266,8 +266,8 @@ typedef void(^PrintBlock)(HLPrinter *printer);
         [printer appendText:@"" alignment:HLTextAlignmentCenter];
         [printer appendText:@"" alignment:HLTextAlignmentCenter];
         
-        NSString *title = @"恒安集团快速配送";
-        NSString *str1 = @"订单详情";
+        NSString *title = appendTitle:@"恒安集团" value:[self.writeParams objectForKey:@"storeName"] ;
+        NSString *str1 = @"收货确认联";
         
         [printer appendText:title alignment:HLTextAlignmentCenter fontSize:HLFontSizeTitleMiddle];
         
@@ -285,15 +285,8 @@ typedef void(^PrintBlock)(HLPrinter *printer);
         [printer appendTitle:@"打印时间:" value:date valueOffset:150];
         [printer appendSeperatorLine];
         
-        NSString* orderNo = [self.writeParams objectForKey:@"orderNo"];
-        [printer appendTitle:@"订单号:" value:orderNo valueOffset:150];
-        //    NSString* source = [self.writeParams objectForKey:@"source"];
-        NSString *source = @"恒安集团微商城";
-        [printer appendTitle:@"下单方式:" value:source valueOffset:150];
-        
-        [printer appendSeperatorLine];
-        NSString* receiverName = [self.writeParams objectForKey:@"receiverName"];
-        [printer appendTitle:@"收件人:" value:receiverName valueOffset:150];
+        NSString* buyerStoreName = [self.writeParams objectForKey:@"buyerStoreName"];
+        [printer appendTitle:@"门店名称:" value:buyerStoreName valueOffset:150];
         NSString* mobile = [self.writeParams objectForKey:@"mobile"];
         [printer appendTitle:@"联系方式:" value:mobile valueOffset:150];
         NSString* provinceName = [self.writeParams objectForKey:@"provinceName"];
@@ -301,9 +294,35 @@ typedef void(^PrintBlock)(HLPrinter *printer);
         NSString* districtName = [self.writeParams objectForKey:@"districtName"];
         NSString* address = [self.writeParams objectForKey:@"address"];
         NSString* reveiveAddress = [[[provinceName stringByAppendingString:cityName] stringByAppendingString:districtName] stringByAppendingString:address];
-        [printer appendTitle:@"收货地址:" value:reveiveAddress valueOffset:150];
-        
+        [printer appendTitle:@"收件地址:" value:reveiveAddress valueOffset:150];
         [printer appendSeperatorLine];
+
+        NSString* orderNo = [self.writeParams objectForKey:@"orderNo"];
+        [printer appendTitle:@"订单号:" value:orderNo valueOffset:150];
+        //    NSString* source = [self.writeParams objectForKey:@"source"];
+        NSString *source = @"恒安集团微商城";
+        if（[@"3" isEqualToString：[self.writeParams objectForKey:@"orderType"]]）
+        {
+            [printer appendTitle:@"订单类型：门店订单" value:@"" valueOffset:150];
+        }
+        else if([@"4" isEqualToString：[self.writeParams objectForKey:@"orderType"]])
+        {
+            [printer appendTitle:@"订单类型：车销订单" value:@"" valueOffset:150];
+        }else{
+            [printer appendTitle:@"订单类型：代客下单" value:@"" valueOffset:150];
+        }
+
+        if([@"10" isEqualToString：[self.writeParams objectForKey:@"shippingStatus"]]){
+            [printer appendTitle:@"订单状态：待配送" value:@"" valueOffset:150];
+        }else if([@"20" isEqualToString：[self.writeParams objectForKey:@"shippingStatus"]]){
+            [printer appendTitle:@"订单状态：配送中" value:@"" valueOffset:150];
+        }else if[(]@"30" isEqualToString：[self.writeParams objectForKey:@"shippingStatus"]]){
+            [printer appendTitle:@"订单状态：已完成" value:@"" valueOffset:150];
+        }else if([@"40" isEqualToString：[self.writeParams objectForKey:@"shippingStatus"]]){
+            [printer appendTitle:@"订单状态：已拒收" value:@"" valueOffset:150];
+        }
+        [printer appendSeperatorLine];
+
         [printer appendTitle:@"商品列表:" value:@"" valueOffset:150];
         self.goodsArray = [self.writeParams objectForKey:@"orderDetailList"];
         for(int i = 0; i < self.goodsArray.count; i++){
@@ -315,6 +334,31 @@ typedef void(^PrintBlock)(HLPrinter *printer);
             NSString* goodsNumberStr = [goodsNumber stringValue];
             [printer appendTitle:@"件数" value:goodsNumberStr valueOffset:150];
         }
+        [printer appendSeperatorLine];
+        [printer appendTitle:@"商品金额:" value:@[self.writeParams objectForKey:@"totalFee"] valueOffset:150];
+        [printer appendTitle:@"优惠金额:" value:@[self.writeParams objectForKey:@"discount"] valueOffset:150];
+        [printer appendTitle:@"        实付金额:" value:@[self.writeParams objectForKey:@"orderAmount"] valueOffset:150];
+        
+        [printer appendSeperatorLine];
+        if([@"free" isEqualToString：[self.writeParams objectForKey:@"payCode"]]){
+            [printer appendTitle:@"支付方式：免支付" value:"" valueOffset:150];
+        }else if("wx" isEqualToString：[self.writeParams objectForKey:@"payCode"]]){
+            [printer appendTitle:@"支付方式：已支付" value:"" valueOffset:150];
+        }else if("ali" isEqualToString：[self.writeParams objectForKey:@"payCode"]]){
+            [printer appendTitle:@"支付方式：支付完成" value:"" valueOffset:150];
+        }
+        if("10" isEqualToString：[self.writeParams objectForKey:@"payStatus"]]){
+            printerAdapter.printer("支付状态：待支付\n");
+        }else if("20" isEqualToString：[self.writeParams objectForKey:@"payStatus"]]){
+            printerAdapter.printer("支付状态：已支付\n");
+        }else if("30" isEqualToString：[self.writeParams objectForKey:@"payStatus"]]){
+            printerAdapter.printer("支付状态：支付完成\n");
+        }else if("40" isEqualToString：[self.writeParams objectForKey:@"payStatus"]]){
+            printerAdapter.printer("支付状态：免支付\n");
+        }
+        [printer appendTitle:@"线下已支付:" value:"________" valueOffset:150];
+        
+        [printer appendSeperatorLine];
         [printer appendFooter:nil];
         [printer appendText:@"" alignment:HLTextAlignmentCenter];
         [printer appendText:@"" alignment:HLTextAlignmentCenter];
