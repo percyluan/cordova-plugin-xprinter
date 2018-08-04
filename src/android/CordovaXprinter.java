@@ -562,7 +562,7 @@ public class CordovaXprinter extends CordovaPlugin {
             printerAdapter.printer("--------------------------------\n");
             printerAdapter.printer("商品金额："+order.getString("totalFee")+"\n");
             printerAdapter.printer("优惠金额："+order.getString("discount")+"\n");
-            printerAdapter.printer("           实付金额："+order.getString("orderAmount")+"\n");
+            printerAdapter.printer("           实际应付："+order.getString("orderAmount")+"\n");
             printerAdapter.printer("********************************\n");
             if("free".equals(order.getString("payCode"))){
                 printerAdapter.printer("支付方式：免支付\n");
@@ -584,6 +584,11 @@ public class CordovaXprinter extends CordovaPlugin {
             printerAdapter.printer("线下已支付： ___________\n");
             printerAdapter.printer("********************************\n");
             printerAdapter.printer("收货人签字：\n");
+            selectCommand("RESET");
+            printerAdapter.printer("\n\n\n\n\n\n\n");
+            printerAdapter.printer("(签字表明您已经收到商品)\n");
+            printerAdapter.printer("********************************\n");
+            printerAdapter.printer("感谢您对恒安产品的支持\n");
             selectCommand("RESET");
             printerAdapter.printer("\n\n\n\n\n\n\n");
     }
