@@ -312,13 +312,13 @@ typedef void(^PrintBlock)(HLPrinter *printer);
             [printer appendTitle:@"订单类型：代客下单" value:@"" valueOffset:150];
         }
 
-        if([@"10" isEqualToString：[self.writeParams objectForKey:@"shippingStatus"]]){
+        if([@"10" isEqualToString: [self.writeParams objectForKey:@"shippingStatus"]]){
             [printer appendTitle:@"订单状态：待配送" value:@"" valueOffset:150];
-        }else if([@"20" isEqualToString：[self.writeParams objectForKey:@"shippingStatus"]]){
+        }else if([@"20" isEqualToString: [self.writeParams objectForKey:@"shippingStatus"]]){
             [printer appendTitle:@"订单状态：配送中" value:@"" valueOffset:150];
-        }else if[(]@"30" isEqualToString：[self.writeParams objectForKey:@"shippingStatus"]]){
+        }else if[(]@"30" isEqualToString: [self.writeParams objectForKey:@"shippingStatus"]]){
             [printer appendTitle:@"订单状态：已完成" value:@"" valueOffset:150];
-        }else if([@"40" isEqualToString：[self.writeParams objectForKey:@"shippingStatus"]]){
+        }else if([@"40" isEqualToString: [self.writeParams objectForKey:@"shippingStatus"]]){
             [printer appendTitle:@"订单状态：已拒收" value:@"" valueOffset:150];
         }
         [printer appendSeperatorLine];
@@ -340,20 +340,20 @@ typedef void(^PrintBlock)(HLPrinter *printer);
         [printer appendTitle:@"        实付金额:" value:@[self.writeParams objectForKey:@"orderAmount"] valueOffset:150];
         
         [printer appendSeperatorLine];
-        if([@"free" isEqualToString：[self.writeParams objectForKey:@"payCode"]]){
+        if([@"free" isEqualToString: [self.writeParams objectForKey:@"payCode"]]){
             [printer appendTitle:@"支付方式：免支付" value:"" valueOffset:150];
-        }else if("wx" isEqualToString：[self.writeParams objectForKey:@"payCode"]]){
+        }else if("wx" isEqualToString: [self.writeParams objectForKey:@"payCode"]]){
             [printer appendTitle:@"支付方式：已支付" value:"" valueOffset:150];
-        }else if("ali" isEqualToString：[self.writeParams objectForKey:@"payCode"]]){
+        }else if("ali" isEqualToString: [self.writeParams objectForKey:@"payCode"]]){
             [printer appendTitle:@"支付方式：支付完成" value:"" valueOffset:150];
         }
-        if("10" isEqualToString：[self.writeParams objectForKey:@"payStatus"]]){
+        if("10" isEqualToString: [self.writeParams objectForKey:@"payStatus"]]){
             printerAdapter.printer("支付状态：待支付\n");
-        }else if("20" isEqualToString：[self.writeParams objectForKey:@"payStatus"]]){
+        }else if("20" isEqualToString: [self.writeParams objectForKey:@"payStatus"]]){
             printerAdapter.printer("支付状态：已支付\n");
-        }else if("30" isEqualToString：[self.writeParams objectForKey:@"payStatus"]]){
+        }else if("30" isEqualToString: [self.writeParams objectForKey:@"payStatus"]]){
             printerAdapter.printer("支付状态：支付完成\n");
-        }else if("40" isEqualToString：[self.writeParams objectForKey:@"payStatus"]]){
+        }else if("40" isEqualToString: [self.writeParams objectForKey:@"payStatus"]]){
             printerAdapter.printer("支付状态：免支付\n");
         }
         [printer appendTitle:@"线下已支付:" value:"________" valueOffset:150];
