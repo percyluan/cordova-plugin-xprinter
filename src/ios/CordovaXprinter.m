@@ -339,20 +339,20 @@ typedef void(^PrintBlock)(HLPrinter *printer);
         
         [printer appendSeperatorLine];
         if([@"free" isEqualToString:[self.writeParams objectForKey:@"payCode"]]){
-            [printer appendTitle:@"支付方式：免支付" value:"" valueOffset:150];
+            [printer appendTitle:@"支付方式：免支付" value:@"" valueOffset:150];
         }else if([@"wx" isEqualToString:[self.writeParams objectForKey:@"payCode"]]){
-            [printer appendTitle:@"支付方式：已支付" value:"" valueOffset:150];
+            [printer appendTitle:@"支付方式：已支付" value:@"" valueOffset:150];
         }else if([@"ali" isEqualToString:[self.writeParams objectForKey:@"payCode"]]){
-            [printer appendTitle:@"支付方式：支付完成" value:"" valueOffset:150];
+            [printer appendTitle:@"支付方式：支付完成" value:@"" valueOffset:150];
         }
         if([@"10" isEqualToString:[self.writeParams objectForKey:@"payStatus"]]){
-            [printer appendTitle:@"支付状态：待支付" value:"" valueOffset:150];
+            [printer appendTitle:@"支付状态：待支付" value:@"" valueOffset:150];
         }else if([@"20" isEqualToString:[self.writeParams objectForKey:@"payStatus"]]){
-            [printer appendTitle:@"支付状态：已支付" value:"" valueOffset:150];
+            [printer appendTitle:@"支付状态：已支付" value:@"" valueOffset:150];
         }else if([@"30" isEqualToString:[self.writeParams objectForKey:@"payStatus"]]){
-            [printer appendTitle:@"支付状态：支付完成" value:"" valueOffset:150];
+            [printer appendTitle:@"支付状态：支付完成" value:@"" valueOffset:150];
         }else if([@"40" isEqualToString:[self.writeParams objectForKey:@"payStatus"]]){
-            [printer appendTitle:@"支付状态：免支付" value:"" valueOffset:150];
+            [printer appendTitle:@"支付状态：免支付" value:@"" valueOffset:150];
         }
         [printer appendTitle:@"线下已支付:" value:@"________" valueOffset:150];
         [printer appendSeperatorLine];
