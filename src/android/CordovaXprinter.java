@@ -585,7 +585,7 @@ public class CordovaXprinter extends CordovaPlugin {
             printerAdapter.printer("********************************\n");
             printerAdapter.printer("收货人签字：\n");
             selectCommand("RESET");
-            printerAdapter.printer("\n\n\n\n\n\n\n");
+            printerAdapter.printer("\n\n\n");
             printerAdapter.printer("(签字表明您已经收到商品)\n");
             printerAdapter.printer("********************************\n");
             printerAdapter.printer("感谢您对恒安产品的支持\n");
