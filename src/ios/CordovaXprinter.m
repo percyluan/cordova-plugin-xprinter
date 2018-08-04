@@ -266,7 +266,7 @@ typedef void(^PrintBlock)(HLPrinter *printer);
         [printer appendText:@"" alignment:HLTextAlignmentCenter];
         [printer appendText:@"" alignment:HLTextAlignmentCenter];
         
-        NSString *title = appendTitle:@"恒安集团" value:[self.writeParams objectForKey:@"storeName"] ;
+        NSString *title = @"恒安集团";
         NSString *str1 = @"收货确认联";
         
         [printer appendText:title alignment:HLTextAlignmentCenter fontSize:HLFontSizeTitleMiddle];
@@ -301,7 +301,7 @@ typedef void(^PrintBlock)(HLPrinter *printer);
         [printer appendTitle:@"订单号:" value:orderNo valueOffset:150];
         //    NSString* source = [self.writeParams objectForKey:@"source"];
         NSString *source = @"恒安集团微商城";
-        if（[@"3" isEqualToString：[self.writeParams objectForKey:@"orderType"]]）
+        if([@"3" isEqualToString：[self.writeParams objectForKey:@"orderType"]]）
         {
             [printer appendTitle:@"订单类型：门店订单" value:@"" valueOffset:150];
         }
