@@ -346,15 +346,15 @@ typedef void(^PrintBlock)(HLPrinter *printer);
             [printer appendTitle:@"支付方式：支付完成" value:"" valueOffset:150];
         }
         if([@"10" isEqualToString:[self.writeParams objectForKey:@"payStatus"]]){
-            printerAdapter.printer("支付状态：待支付\n");
+            printerAdapter.printer(@"支付状态：待支付");
         }else if([@"20" isEqualToString:[self.writeParams objectForKey:@"payStatus"]]){
-            printerAdapter.printer("支付状态：已支付\n");
+            printerAdapter.printer(@"支付状态：已支付");
         }else if([@"30" isEqualToString:[self.writeParams objectForKey:@"payStatus"]]){
-            printerAdapter.printer("支付状态：支付完成\n");
+            printerAdapter.printer(@"支付状态：支付完成");
         }else if([@"40" isEqualToString:[self.writeParams objectForKey:@"payStatus"]]){
-            printerAdapter.printer("支付状态：免支付\n");
+            printerAdapter.printer(@"支付状态：免支付");
         }
-        [printer appendTitle:@"线下已支付:" value:"________" valueOffset:150];
+        [printer appendTitle:@"线下已支付:" value:@"________" valueOffset:150];
         [printer appendSeperatorLine];
         [printer appendFooter:nil];
         [printer appendText:@"" alignment:HLTextAlignmentCenter];
