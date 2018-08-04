@@ -314,7 +314,7 @@ typedef void(^PrintBlock)(HLPrinter *printer);
             [printer appendTitle:@"订单状态：待配送" value:@"" valueOffset:150];
         }else if([@"20" isEqualToString:[self.writeParams objectForKey:@"shippingStatus"]]){
             [printer appendTitle:@"订单状态：配送中" value:@"" valueOffset:150];
-        }else if[(]@"30" isEqualToString:[self.writeParams objectForKey:@"shippingStatus"]]){
+        }else if(@"30" isEqualToString:[self.writeParams objectForKey:@"shippingStatus"]]){
             [printer appendTitle:@"订单状态：已完成" value:@"" valueOffset:150];
         }else if([@"40" isEqualToString:[self.writeParams objectForKey:@"shippingStatus"]]){
             [printer appendTitle:@"订单状态：已拒收" value:@"" valueOffset:150];
