@@ -357,7 +357,6 @@ typedef void(^PrintBlock)(HLPrinter *printer);
             printerAdapter.printer("支付状态：免支付\n");
         }
         [printer appendTitle:@"线下已支付:" value:"________" valueOffset:150];
-        
         [printer appendSeperatorLine];
         [printer appendFooter:nil];
         [printer appendText:@"" alignment:HLTextAlignmentCenter];
