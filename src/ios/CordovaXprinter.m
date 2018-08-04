@@ -301,12 +301,10 @@ typedef void(^PrintBlock)(HLPrinter *printer);
         [printer appendTitle:@"订单号:" value:orderNo valueOffset:150];
         //    NSString* source = [self.writeParams objectForKey:@"source"];
         NSString *source = @"恒安集团微商城";
-        if([@"3" isEqualToString:[self.writeParams objectForKey:@"orderType"]]）
-        {
+        if([@"3" isEqualToString:[self.writeParams objectForKey:@"orderType"]]){
             [printer appendTitle:@"订单类型：门店订单" value:@"" valueOffset:150];
         }
-        else if([@"4" isEqualToString:[self.writeParams objectForKey:@"orderType"]])
-        {
+        else if([@"4" isEqualToString:[self.writeParams objectForKey:@"orderType"]]){
             [printer appendTitle:@"订单类型：车销订单" value:@"" valueOffset:150];
         }else{
             [printer appendTitle:@"订单类型：代客下单" value:@"" valueOffset:150];
