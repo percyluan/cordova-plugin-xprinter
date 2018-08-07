@@ -413,6 +413,9 @@
     
 - (void)appendFooter:(NSString *)footerInfo
     {
+
+        NSString *sign = @"(签字表明您已经收到商品)";
+        [self appendText:sign  alignment:HLTextAlignmentLeft];
         [self appendSeperatorLine];
         if (!footerInfo) {
             footerInfo = @"感谢您对恒安产品的支持！";

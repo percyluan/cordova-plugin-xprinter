@@ -333,9 +333,13 @@ typedef void(^PrintBlock)(HLPrinter *printer);
             [printer appendTitle:@"件数" value:goodsNumberStr valueOffset:150];
         }
         [printer appendSeperatorLine];
-        [printer appendTitle:@"商品金额:" value:[self.writeParams objectForKey:@"totalFee"] valueOffset:150];
-        [printer appendTitle:@"优惠金额:" value:[self.writeParams objectForKey:@"discount"] valueOffset:150];
-        [printer appendTitle:@"        实付金额:" value:[self.writeParams objectForKey:@"orderAmount"] valueOffset:150];
+        
+        NSNumber* totalFee = [self.writeParams objectForKey:@"totalFee" ];
+        NSNumber* discount = [self.writeParams objectForKey:@"discount"];
+        NSNumber* orderAmount = [self.writeParams objectForKey:@"orderAmount"];
+        [printer appendTitle:@"商品金额:" value:[totalFee stringValue]];
+        [printer appendTitle:@"优惠金额:" value:[discount stringValue]];
+        [printer appendTitle:@"        实付金额:" value:[orderAmount stringValue]];
         
         [printer appendSeperatorLine];
         if([@"free" isEqualToString:[self.writeParams objectForKey:@"payCode"]]){
@@ -356,10 +360,10 @@ typedef void(^PrintBlock)(HLPrinter *printer);
         }
         [printer appendTitle:@"线下已支付:" value:@"________" valueOffset:150];
         [printer appendSeperatorLine];
+        [printer appendTitle:@"收货人签字:" value:@""];
+        [printer appendText:@"" alignment:HLTextAlignmentCenter];
+        [printer appendText:@"" alignment:HLTextAlignmentCenter];
         [printer appendFooter:nil];
-        [printer appendText:@"" alignment:HLTextAlignmentCenter];
-        [printer appendText:@"" alignment:HLTextAlignmentCenter];
-        [printer appendText:@"" alignment:HLTextAlignmentCenter];
         [printer appendText:@"" alignment:HLTextAlignmentCenter];
         [printer appendText:@"" alignment:HLTextAlignmentCenter];
         [printer appendText:@"" alignment:HLTextAlignmentCenter];
