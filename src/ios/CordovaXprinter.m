@@ -75,7 +75,7 @@ typedef void(^PrintBlock)(HLPrinter *printer);
         __weak HLBLEManager *weakManager = manager;
         manager.discoverPeripheralBlcok = ^(CBCentralManager *central, CBPeripheral *peripheral, NSDictionary *advertisementData, NSNumber *RSSI) {
             NSString* uuid = @"0248D56F-BBEC-8286-3CDE-BF7208BFF978";
-            NSString* name = @"Printrt001";
+            NSString* name = @"Printer_D0FD";
             CDVPluginResult* pluginResult = nil;
             if (peripheral.name.length <= 0) {
                 return ;
