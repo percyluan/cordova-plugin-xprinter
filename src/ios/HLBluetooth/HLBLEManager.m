@@ -127,10 +127,10 @@ static HLBLEManager *instance = nil;
     _writeCount = 0;
     _responseCount = 0;
     // iOS 9 以后，系统添加了这个API来获取特性能写入的最大长度
-    if ([_connectedPerpheral respondsToSelector:@selector(maximumWriteValueLengthForType:)]) {
-        _limitLength = [_connectedPerpheral maximumWriteValueLengthForType:type];
-    }
-    
+    //if ([_connectedPerpheral respondsToSelector:@selector(maximumWriteValueLengthForType:)]) {
+    //    _limitLength = [_connectedPerpheral maximumWriteValueLengthForType:type];
+    //}
+    _limitLength = 146;
     // 如果_limitLength 小于等于0，则表示不用分段发送
     if (_limitLength <= 0) {
         [_connectedPerpheral writeValue:data forCharacteristic:characteristic type:type];
