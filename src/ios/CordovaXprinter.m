@@ -270,7 +270,7 @@ typedef void(^PrintBlock)(HLPrinter *printer);
 	NSString *seller = [self.writeParams objectForKey:@"storeName"];
         NSString *str1 = @"收货确认联";
         
-        [printer appendText:[title stringByAppendingString seller] alignment:HLTextAlignmentCenter fontSize:HLFontSizeTitleMiddle];
+        [printer appendText:[title stringByAppendingString:seller] alignment:HLTextAlignmentCenter fontSize:HLFontSizeTitleMiddle];
         
         [printer appendText:@"" alignment:HLTextAlignmentCenter];
         
