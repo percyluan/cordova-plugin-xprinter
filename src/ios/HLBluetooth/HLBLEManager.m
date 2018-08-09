@@ -83,9 +83,9 @@ static HLBLEManager *instance = nil;
     _stopScanAfterConnected = stop;
     
     //2.先取消之前连接的蓝牙外设
-    if (_connectedPerpheral) {
-        [_centralManager cancelPeripheralConnection:_connectedPerpheral];
-    }
+//    if (_connectedPerpheral) {
+//        [_centralManager cancelPeripheralConnection:_connectedPerpheral];
+//    }
     
     //3.开始连接新的蓝牙外设
     [_centralManager connectPeripheral:peripheral options:connectOptions];
