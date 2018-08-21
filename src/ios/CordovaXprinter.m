@@ -285,7 +285,7 @@ typedef void(^PrintBlock)(HLPrinter *printer);
         //    [printer appendBarCodeWithInfo:@"123456789012"];
         NSDateFormatter *nsdf2=[[NSDateFormatter alloc] init];
         [nsdf2 setDateStyle:NSDateFormatterShortStyle];
-        [nsdf2 setDateFormat:@"yyyy-mm-dd hh:mm"];
+        [nsdf2 setDateFormat:@"yyyy-MM-dd hh:mm"];
         NSString *date=[nsdf2 stringFromDate:[NSDate date]];
         [printer appendTitle:@"打印时间:" value:date valueOffset:150];
         [printer appendSeperatorLine];
