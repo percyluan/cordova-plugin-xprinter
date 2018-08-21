@@ -379,46 +379,6 @@ public class CordovaXprinter extends CordovaPlugin {
         this.writeDevice(sb.toString(),callbackContext);
     }
 
-     /**
-     * 打印三列
-     *
-     * @param leftText   左侧文字
-     * @param middleText 中间文字
-     * @param rightText  右侧文字
-     * @return
-     */
-    public String printThreeData(String leftText, String middleText, String rightText) {
-        StringBuilder sb = new StringBuilder();
-        // 左边最多显示 LEFT_TEXT_MAX_LENGTH 个汉字 + 两个点
-        if (leftText.length() > LEFT_TEXT_MAX_LENGTH) {
-            leftText = leftText.substring(0, LEFT_TEXT_MAX_LENGTH) + "..";
-        }
-        int leftTextLength = getBytesLength(leftText);
-        int middleTextLength = getBytesLength(middleText);
-        int rightTextLength = getBytesLength(rightText);
-
-        sb.append(leftText);
-        // 计算左侧文字和中间文字的空格长度
-        int marginBetweenLeftAndMiddle = LEFT_LENGTH - leftTextLength - middleTextLength / 2;
-
-        for (int i = 0; i < marginBetweenLeftAndMiddle; i++) {
-            sb.append(" ");
-        }
-        sb.append(middleText);
-
-        // 计算右侧文字和中间文字的空格长度
-        int marginBetweenMiddleAndRight = RIGHT_LENGTH - middleTextLength / 2 - rightTextLength;
-
-        for (int i = 0; i < marginBetweenMiddleAndRight; i++) {
-            sb.append(" ");
-        }
-
-        // 打印的时候发现，最右边的文字总是偏右一个字符，所以需要删除一个空格
-        sb.delete(sb.length() - 1, sb.length()).append(rightText);
-
-        return sb.toString();
-    }
-
     /**
      * 打印图
      *
@@ -494,103 +454,92 @@ public class CordovaXprinter extends CordovaPlugin {
 
     }
 
-
-    public String stringHandler(String value,Integer length){
-        StringBuffer sb = new StringBuffer();
-        if(value!=null){
-            if(value.length()>length){
-                sb.append(value.substring(0, length) + "..");
-            }else{
-                sb.append(value);
-                for(int i=0;i<length-value.length();i++){
-                    sb.append(" ");
-                }
-            }
-        }
-        return sb.toString();
-    }
-
     private void printHenganOrder(JSONObject order) throws Exception{
-            printerAdapter.printer("\n\n");
-            selectCommand("BOLD");
-            printerAdapter.printer("恒安集团"+order.getString("storeName"));
-            selectCommand("RESET");
-            printerAdapter.printer("            收货确认联\n\n");
-            selectCommand("RESET");
-            selectCommand("LINE_SPACING_DEFAULT");
-            SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm");
-            String nowDate = df.format(new Date());
-            printerAdapter.printer("打印时间："+nowDate+"\n");
-            printerAdapter.printer("********************************\n");
-            printerAdapter.printer("门店名称："+order.getString("buyerStoreName")+"\n");
-            printerAdapter.printer("联系方式："+order.getString("mobile")+"\n");
-            printerAdapter.printer("收件地址："+order.getString("provinceName")+" "+order.getString("cityName")+" "+order.getString("districtName")+" "+order.getString("address")+"\n");
-            printerAdapter.printer("********************************\n");
-            printerAdapter.printer("订单号：  "+order.getString("orderNo")+"\n");
-            //订单类型
-            if("3".equals(order.getString("orderType"))){
-                printerAdapter.printer("订单类型：门店订单\n");
-            }else if ("4".equals(order.getString("orderType"))){
-                printerAdapter.printer("订单类型：车销订单\n");
-            }else{
-                printerAdapter.printer("订单类型：代客下单\n");
-            }
-            //订单状态
-            if("10".equals(order.getString("shippingStatus"))){
-                printerAdapter.printer("订单状态：待配送\n");
-            }else if("20".equals(order.getString("shippingStatus"))){
-                printerAdapter.printer("订单状态：配送中\n");
-            }else if("30".equals(order.getString("shippingStatus"))){
-                printerAdapter.printer("订单状态：已完成\n");
-            }else if("40".equals(order.getString("shippingStatus"))){
-                printerAdapter.printer("订单状态：已拒收\n");
-            }
-            printerAdapter.printer("********************************\n");
-            printerAdapter.printer("商品列表：\n");
-            JSONArray goods = order.getJSONArray("orderDetailList");
-            printerAdapter.printer(stringHandler("货号",7)+stringHandler("单位",3)+ stringHandler("数量",3)+stringHandler("单价",4)+ stringHandler("金额",5) +"\n");
-            for(int i = 0;i<goods.length();i++){
-                JSONObject good = goods.getJSONObject(i);
-                printerAdapter.printer(
-                  stringHandler(good.getString("goodsSn"),10)
-                + stringHandler(good.getString("specification"),4)
-                + stringHandler(good.getString("goodsNumber"),4)
-                + stringHandler(good.getString("factoryPrice"),5)
-                + stringHandler(good.getString("goodsPrice"),7)
-                +"\n");
-            }
-            printerAdapter.printer("--------------------------------\n");
-            printerAdapter.printer("商品金额："+order.getString("totalFee")+"\n");
-            printerAdapter.printer("优惠金额："+order.getString("discount")+"\n");
-            printerAdapter.printer("           实际应付："+order.getString("orderAmount")+"\n");
-            printerAdapter.printer("********************************\n");
-            if("free".equals(order.getString("payCode"))){
-                printerAdapter.printer("支付方式：免支付\n");
-            }else if("wx".equals(order.getString("payCode"))){
-                printerAdapter.printer("支付方式：已支付\n");
-            }else if("ali".equals(order.getString("payCode"))){
-                printerAdapter.printer("支付方式：支付完成\n");
-            }
-            //10-待支付；20-已支付；30-支付完成;40-免支付
-            if("10".equals(order.getString("payStatus"))){
-                printerAdapter.printer("支付状态：待支付\n");
-            }else if("20".equals(order.getString("payStatus"))){
-                printerAdapter.printer("支付状态：已支付\n");
-            }else if("30".equals(order.getString("payStatus"))){
-                printerAdapter.printer("支付状态：支付完成\n");
-            }else if("40".equals(order.getString("payStatus"))){
-                printerAdapter.printer("支付状态：免支付\n");
-            }
-            printerAdapter.printer("线下已支付： ___________\n");
-            printerAdapter.printer("********************************\n");
-            printerAdapter.printer("收货人签字：\n");
-            selectCommand("RESET");
-            printerAdapter.printer("\n\n\n");
-            printerAdapter.printer("(签字表明您已经收到商品)\n");
-            printerAdapter.printer("********************************\n");
-            printerAdapter.printer("    感谢您对恒安产品的支持\n");
-            selectCommand("RESET");
-            printerAdapter.printer("\n\n\n\n\n\n\n");
+		printerAdapter.printer("\n\n");
+		selectCommand("ALIGN_CENTER");
+		printerAdapter.printer("恒安集团\n");
+		printerAdapter.printer(order.getString("storeName")+"\n");
+		printerAdapter.printer("\n");
+		printerAdapter.printer("收货确认联\n");
+		printerAdapter.printer("\n");
+		selectCommand("RESET");
+		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+		String nowDate = df.format(new Date());
+		printerAdapter.printer("打印时间：  "+nowDate+"\n");
+		printerAdapter.printer("********************************\n");
+		printerAdapter.printer("门店名称：  "+order.getString("buyerStoreName")+"\n");
+		printerAdapter.printer("联系方式：  "+order.getString("mobile")+"\n");
+		printerAdapter.printer("收件地址：  "+order.getString("provinceName")+order.getString("cityName")+order.getString("districtName")+order.getString("address")+"\n");
+		printerAdapter.printer("********************************\n");
+		printerAdapter.printer("订单号：    "+order.getString("orderNo")+"\n");
+		String orderType = order.getString("orderType");
+		String orderTypeStr = "代客下单";
+		if("3".equals(orderType)){
+			orderTypeStr = "门店订单";
+		} else if("4".equals(orderType)){
+			orderTypeStr = "车销订单";
+		}
+		printerAdapter.printer("订单类型：  "+orderTypeStr+"\n");
+		String shippingStatus = order.getString("shippingStatus");
+		String shippingStatusStr = "";
+		if("10".equals(shippingStatus)){
+			shippingStatusStr = "待配送";
+		} else if("20".equals(shippingStatus)){
+			shippingStatusStr = "配送中";
+		} else if("30".equals(shippingStatus)){
+			shippingStatusStr = "已完成";
+		} else if("40".equals(shippingStatus)){
+			shippingStatusStr = "已拒收";
+		}
+		printerAdapter.printer("订单状态：  "+shippingStatusStr+"\n");
+		printerAdapter.printer("********************************\n");
+		printerAdapter.printer("商品货号：  小计\n");
+		JSONArray goods = order.getJSONArray("orderDetailList");
+		for(int i = 0;i<goods.length();i++){
+			JSONObject good = goods.getJSONObject(i);
+			String productCode = good.getString("goodsSn");
+			int blankLen = 12 - productCode.length();
+			for(int i = 0; i < blankLen; i ++){
+				productCode = productCode + " ";
+			}
+			printerAdapter.printer(productCode+good.getString("goodsNumber")+good.getString("unit")+"*"+good.getString("goodsPrice")+" = "+good.getString("totalFee")+"\n");
+		}
+		printerAdapter.printer("********************************\n");
+		printerAdapter.printer(printTwoData("商品金额："), order.getString("totalFee"));
+		printerAdapter.printer("\n");
+		printerAdapter.printer(printTwoData("优惠金额："), order.getString("discount"));
+		printerAdapter.printer("\n");
+		printerAdapter.printer(printTwoData("实际应付："), order.getString("orderAmount"));
+		printerAdapter.printer("\n");
+		printerAdapter.printer("********************************\n");
+		String payCode = order.getString("payCode");
+		if("free".equals(payCode)){
+			printerAdapter.printer("支付方式：非在线支付\n");
+		} else if("wx".equals(payCode)){
+			printerAdapter.printer("支付方式：已支付\n");
+		} else if("ali".equals(payCode)){
+			printerAdapter.printer("支付方式：支付完成\n");
+		}
+		String payCode = order.getString("payStatus");
+		if("10".equals(payStatus)){
+			printerAdapter.printer("支付状态：待支付\n");
+		} else if("20".equals(payStatus)){
+			printerAdapter.printer("支付状态：已支付\n");
+		} else if("30".equals(payStatus)){
+			printerAdapter.printer("支付状态：支付完成\n");
+		} else if("40".equals(payStatus)){
+			printerAdapter.printer("支付状态：待线下支付\n");
+		}
+		printerAdapter.printer("\n");
+		printerAdapter.printer("线下支付金额：________\n");
+		printerAdapter.printer("********************************\n");
+		printerAdapter.printer("收货人签字：\n");
+		printerAdapter.printer("\n\n\n");
+		printerAdapter.printer("（签字表明您已经收到商品）\n");
+		printerAdapter.printer("********************************\n");
+		selectCommand("ALIGN_CENTER");
+		printerAdapter.printer("感谢你对恒安产品的支持！\n");
+		selectCommand("RESET");
+		printerAdapter.printer("\n\n\n\n\n\n\n\n\n\n");
     }
-
 }
